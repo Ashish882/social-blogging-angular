@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-
+import { NgxEditorModule } from 'ngx-editor';
+import { HttpClientModule } from
+'@angular/common/http';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -16,6 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MenueComponent } from './menue/menue.component';
 import { MyblogsComponent } from './myblogs/myblogs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CreateComponent } from './create/create.component';
+import { PostComponent } from './post/post.component';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBcjIfaY-VRH8aKw9V3P95Dahs_yQwVudE",
@@ -40,13 +43,18 @@ firebase.initializeApp(firebaseConfig);
     MenueComponent,
     MyblogsComponent,
     ProfileComponent,
-
+    CreateComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxEditorModule,
+    HttpClientModule
+   
+ 
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore'
 @Component({
   selector: 'app-myblogs',
   templateUrl: './myblogs.component.html',
@@ -7,9 +9,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyblogsComponent implements OnInit {
 
-  constructor() { }
+
+  user : any = {} ;
+  posts: any[] = [];
+
+  constructor() { 
+
+    this.user = firebase.auth().currentUser;
+    this.getPosts();
+  }
 
   ngOnInit(): void {
+  }
+
+  getPosts(){
+
+    //get post
+    firebase.firestore().collection("posts")
+    .get().then((querySnapshot)=>{
+      console.log(querySnapshot.docs);
+      this.posts=querySnapshot.docs;
+    })
+    .catch((err) => {
+    console.log(err);
+    })
+
+    
+  }
+
+  onPostCreated(){
+    //refresh the list of posts
+    this.posts = [];
+    this.getPosts();
+  
+
   }
 
 }
