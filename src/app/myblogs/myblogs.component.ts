@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/firestore'
+import 'firebase/firestore';
+
 @Component({
   selector: 'app-myblogs',
   templateUrl: './myblogs.component.html',
@@ -26,6 +27,7 @@ export class MyblogsComponent implements OnInit {
 
     //get post
     firebase.firestore().collection("posts")
+    .orderBy("created","desc")
     .get().then((querySnapshot)=>{
       console.log(querySnapshot.docs);
       this.posts=querySnapshot.docs;
@@ -44,5 +46,12 @@ export class MyblogsComponent implements OnInit {
   
 
   }
+
+  onDelete(){
+    //refresh the list of posts
+    this.posts = [];
+    this.getPosts();
+  }
+
 
 }

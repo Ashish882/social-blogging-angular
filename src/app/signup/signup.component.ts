@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder , FormGroup , FormControl, Validators } from '@angular/forms';
-
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -68,10 +70,25 @@ export class SignupComponent implements OnInit {
    let lastName : string = signupform.value.lastName;
 
   this.authService.signup(email, password,firstName,lastName)
-   .then((response) => {
+   .then((user: any) => {
 
-    console.log(response);
-    this.message = "You have been signed up succsesfully";
+     firebase.firestore().collection("users").doc(user.uid)
+     .set({
+       firstName : signupform.value.firstName,
+       lastName : signupform.value.lastName,
+       email: signupform.value.email,
+       photoURL: user.photoURL,
+       interests:"",
+       bio: "",
+       hobbies : ""
+     }).then(()=>{
+
+      this.message = "You have been signed up succsesfully";
+
+
+     })
+
+  
 
    }).catch(( error)  => {
 

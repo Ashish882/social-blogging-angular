@@ -31,7 +31,7 @@ export class AuthService {
             photoURL: "https://api.adorable.io/avatars/" + randomNumber
     
         }).then(() => {
-             resolve(0);
+             resolve(response.user);
 
         }).catch(( error => {
           reject(error);
